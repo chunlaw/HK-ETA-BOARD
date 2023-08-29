@@ -1,10 +1,11 @@
 import React, { ReactNode, useCallback, useEffect, useState } from "react";
-import { fetchEtaObj, BusDb, fetchEtas, Eta } from "hk-bus-eta";
+import { fetchEtaObj, BusDb, fetchEtas } from "hk-bus-eta";
 import { useNavigate, useParams } from "react-router-dom";
+import { EtaEntry } from "./data.t";
 
 interface AppContextState {
   db: BusDb;
-  data: Array<{ etas: Eta[]; ts: Date }>;
+  data: EtaEntry[];
 }
 
 interface AppContextValue extends AppContextState {

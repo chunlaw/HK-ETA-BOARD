@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { Eta } from "hk-bus-eta";
 
 export const getEtaString = (eta: Eta | null) => {
@@ -11,7 +12,7 @@ export const getEtaString = (eta: Eta | null) => {
       return eta.remark.zh;
     }
 
-    return eta.eta;
+    return format(new Date(eta.eta), "y-MM-dd HH:mm:ss");
   }
 };
 
