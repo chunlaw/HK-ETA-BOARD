@@ -1,10 +1,10 @@
 import React, { ReactNode, useCallback, useEffect, useState } from "react";
-import { fetchEtaObj, BusDb, fetchEtas } from "hk-bus-eta";
+import { EtaDb, fetchEtas, fetchEtaDb } from "hk-bus-eta";
 import { useNavigate, useParams } from "react-router-dom";
 import { EtaEntry } from "./data.t";
 
 interface AppContextState {
-  db: BusDb;
+  db: EtaDb;
   data: EtaEntry[];
 }
 
@@ -52,7 +52,7 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
 
   useEffect(() => {
     if (state.db.holidays.length === 0) {
-      fetchEtaObj().then((db) => {
+      fetchEtaDb().then((db) => {
         setState((prev) => ({
           ...prev,
           db,
@@ -69,6 +69,7 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
       if (routeId && stopSeq !== undefined) {
         fetchEtas({
           ...state.db.routeList[routeId],
+          stopList: state.db.stopList,
           seq: parseInt(stopSeq, 10),
           language: "zh",
         }).then((etas) => {
@@ -115,6 +116,7 @@ const DEFAULT_STATE: AppContextState = {
     holidays: [],
     routeList: {},
     stopMap: {},
+    serviceDayMap: {},
   },
   data: [],
 };
